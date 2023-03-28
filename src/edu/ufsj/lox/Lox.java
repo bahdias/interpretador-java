@@ -21,7 +21,7 @@ public class Lox{
 			System.exit(64);
 		}else if(args.length == 1) {
 			runFile(args[0]);
-			
+			  
 		}else { 
 			//Faz o REPL
 			runPrompt();
@@ -50,7 +50,6 @@ public class Lox{
 	}
 
 	
-
 	private static void run(String source) { 
 		//Interpretar ou um arquivo, ou uma linha só
 		Scanner scanner = new Scanner(source); //Processa o source e quebra em uma lista de tokens
