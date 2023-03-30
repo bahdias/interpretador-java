@@ -91,7 +91,6 @@ class Scanner {
 		case '\n':
 			line++;
 			break;
-		
 		default:
 			Lox.error(line, "Unexpected character");
 			break;

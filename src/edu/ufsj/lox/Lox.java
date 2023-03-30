@@ -56,7 +56,7 @@ public class Lox{
 		List<Token> tokens = scanner.scanTokens();
 		//por enquanto, somente mostra os tokens
 		for(Token token : tokens)
-			println(token);
+			System.out.println(token);
 	}
 	
 	static void error(int line, String message) {
