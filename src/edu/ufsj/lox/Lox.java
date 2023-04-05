@@ -44,6 +44,17 @@ public class Lox{
 			System.out.print("> ");
 			String line = reader.readLine();
 			if(line == null) break;
+			
+			//Se tiver comentário de multiplas linhas:
+			if(line.contains("/*")) {
+				while(!line.contains("*/")) {
+					System.out.print("> ");
+					line = reader.readLine();
+				}
+			}//Terminou o comentário de multiplas linhas
+			
+			System.out.print("> ");
+			line = reader.readLine();
 			run(line);
 			hadError = false;
 		}

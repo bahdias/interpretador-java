@@ -60,6 +60,18 @@ class Scanner {
 		return source.charAt(current);
 	}
 	
+	private boolean endOfComment(char expected1, char expected2) {
+		if(isAtEnd()) return false;
+		if(source.charAt(current) == expected1) {
+			current++;
+			if(source.charAt(current) == expected2){
+				current++;
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private void scanToken() {
 		char c = advance();
 		switch (c) {
@@ -80,17 +92,27 @@ class Scanner {
 		case '/': if(match('/')) {
 			//comentarios de uma linha
 			while(peek() != '\n' && !isAtEnd()) advance();
-		} else {
+		} else if(match('*')){
+			//comentarios de mais de uma linha
+			while(!endOfComment('*', '/') && !isAtEnd()){
+				advance();				
+			}
+			
+		}else {
+
 			addToken(SLASH);
 		} break;
 		case ' ':
 		case '\r':
 		case '\t':
-			//Ignora espaÃ§oes em branco
+			//Ignora espaaçoes em branco
 			break;
 		case '\n':
 			line++;
 			break;
+			
+		//--------- DESAFIO 1: ---------
+		
 		default:
 			Lox.error(line, "Unexpected character");
 			break;
