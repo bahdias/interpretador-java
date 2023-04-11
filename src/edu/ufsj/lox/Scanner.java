@@ -72,6 +72,62 @@ class Scanner {
 		return false;
 	}
 	
+	private void string() {
+		while(peek()!= '"' && !isAtEnd()) {
+			if(peek() == '\n') line++;
+			advance();
+		}
+		//Abre " sem o retrospectivo fecha "
+		if(isAtEnd()) {
+			Lox.error(line, "Undeterminated string.");
+			return;
+		}
+		//O fecha "
+		advance();
+		//remove os "s
+		String value = source.substring(start + 1, current - 1);
+		addToken(STRING, value);
+	}
+	
+	private boolean isDigit(char c) {
+		return c >= '0' && c <= '9';
+	}
+	
+	private void number() {
+		while(isDigit(peek())) advance();
+		
+		//
+		if(peek() == '.' && isDigit(peekNext())) {
+			//Consome o .
+			advance();
+			
+			while(isDigit(peek())) advance();
+		}
+		
+		addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+	}
+	
+	private void identifier() {
+		while(isAlphaNumeric(peek())) advance();
+		
+		addToken(IDENTIFIER);
+	}
+	
+	private boolean isAlpha(char c) {
+		return(c >= 'a' && c <= 'z') ||
+				(c >= 'A' && c <- 'Z') ||
+				c == '_';
+	}
+	
+	private boolean isAlphaNumeric(char c) {
+		return isAlpha(c) || isDigit(c);
+	}
+	
+	private char peekNext() {
+		if(current + 1 >= source.length()) return '\0';
+		return source.charAt(current + 1);
+	}
+	
 	private void scanToken() {
 		char c = advance();
 		switch (c) {
@@ -93,15 +149,18 @@ class Scanner {
 			//comentarios de uma linha
 			while(peek() != '\n' && !isAtEnd()) advance();
 		} else if(match('*')){
+			
+			//---------- DESAFIO 1: ----------
 			//comentarios de mais de uma linha
 			while(!endOfComment('*', '/') && !isAtEnd()){
 				advance();				
 			}
-			
 		}else {
-
 			addToken(SLASH);
 		} break;
+		case '"':
+			string();
+			break;
 		case ' ':
 		case '\r':
 		case '\t':
@@ -110,11 +169,19 @@ class Scanner {
 		case '\n':
 			line++;
 			break;
-			
-		//--------- DESAFIO 1: ---------
-		
+		case 'o':
+			if(peek() == 'r') {
+				addToken(OR);
+			}
+			break;
 		default:
-			Lox.error(line, "Unexpected character");
+			if (isDigit(c)) {
+				number();
+			}else if (isAlpha(c)){
+				identifier();
+			}else {
+				Lox.error(line, "Unexpected character");
+			}
 			break;
 		}
 	}
