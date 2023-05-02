@@ -28,33 +28,23 @@ public class GenerateAst {
 		writer.println("import java.util.List;");
 		writer.println();
 		writer.println("abstract class " + baseName + " {");
-<<<<<<< Updated upstream
-=======
 		
 		defineVisitor(writer, baseName, types);
->>>>>>> Stashed changes
-	
 	     //subclasses da arvore sintatica	
 		for(String type : types) {
 			String className = type.split(":")[0].trim();
 			String fields = type.split(":")[1].trim();
 			defineType(writer, baseName, className, fields);
 		}
-<<<<<<< Updated upstream
-=======
 		
 		//definicao do accept()
 		writer.println();
 		writer.println("   abstract <R> R accept" + "(Visitor<R> visitor);");
 		
-		
->>>>>>> Stashed changes
 		writer.println("}");
 		writer.close();
 	}
 	
-<<<<<<< Updated upstream
-=======
 	private static void defineVisitor(PrintWriter writer, String baseName, List<String> types) {
 		writer.println("   interface Visitor<R> {");
 		
@@ -66,7 +56,6 @@ public class GenerateAst {
 		writer.println("  }");
 	}
 	
->>>>>>> Stashed changes
 	private static void defineType(PrintWriter writer, String baseName, String className, String fieldList) {
 		writer.println("   static class " + className + " extends " + baseName + " {");
 		
@@ -81,9 +70,6 @@ public class GenerateAst {
 		
 		writer.println("      }"); //fecha def construtor
 		
-		writer.println();
-<<<<<<< Updated upstream
-=======
 		writer.println("      @Override");
 		writer.println("      <R> R accept (Visitor<R> " + "visitor) {");
 		writer.println("         return visitor.visit" + className + baseName + "(this);");
@@ -92,7 +78,6 @@ public class GenerateAst {
 		writer.println();
 		
 		
->>>>>>> Stashed changes
 		for (String field : fields) {
 			writer.println("      final " + field + ";");
 		}

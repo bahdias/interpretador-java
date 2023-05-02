@@ -29,10 +29,6 @@ abstract class Expr {
       final Object value;
    }
    static class Unary extends Expr {
-<<<<<<< Updated upstream
-=======
-	   
->>>>>>> Stashed changes
       Unary(Token operator, Expr right) {
          this.operator = operator;
          this.right = right;
