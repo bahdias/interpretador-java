@@ -1,0 +1,9 @@
+/*\\Users\\barba\\Desktop\\Compiladores\\interpretador-java\\src\\edu\\ufsj\\lox\\ArquivoTexto.txt*/
+,
+><
+/*Comentarios
+de
+multiplas
+linhas*/
+.
+!
