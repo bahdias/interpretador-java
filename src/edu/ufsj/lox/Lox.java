@@ -30,9 +30,9 @@ public class Lox{
 	
 	private static void runFile(String path) throws IOException { 
 		//Método que vai para o arquivo
-				byte[] bytes = Files.readAllBytes(Paths.get(path));
-				run(new String(bytes, Charset.defaultCharset()));
-				if(hadError) System.exit(65);
+		byte[] bytes = Files.readAllBytes(Paths.get(path));
+		run(new String(bytes, Charset.defaultCharset()));
+		if(hadError) System.exit(65);
 	}
 	
 	private static void runPrompt() throws IOException{ 
@@ -41,17 +41,18 @@ public class Lox{
 		BufferedReader reader = new BufferedReader(input);
 		
 		for(;;) {
-			System.out.print("> ");
+			System.out.print(">");
 			String line = reader.readLine();
-			if(line == null) break;
-			
+			if(line == null){
+				break;
+			}
 			//Se tiver comentário de multiplas linhas:
 			else if(line.contains("/*")) {
 				while(!line.contains("*/")) {
-					System.out.print("> ");
+					System.out.print(">");
 					line = reader.readLine();
-					break;
 				}
+				continue;
 			}//Terminou o comentário de multiplas linhas
 			
 			run(line);
