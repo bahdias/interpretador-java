@@ -30,6 +30,7 @@ public class GenerateAst {
 		writer.println("abstract class " + baseName + " {");
 		
 		defineVisitor(writer, baseName, types);
+		
 	     //subclasses da arvore sintatica	
 		for(String type : types) {
 			String className = type.split(":")[0].trim();
