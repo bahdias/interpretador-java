@@ -50,6 +50,13 @@ public class AstPrinter implements Expr.Visitor<String>{
 		builder.append(")");
 		return builder.toString();
 	}
+
+	@Override
+	public String visitTernaryExpr(Expr.Ternary expr) {
+		//retorna a expressao do operador ternario como se fosse uma árvore sintatica
+	    return parenthesize("?:", expr.condition, expr.trueExpr, expr.falseExpr);
+	}
+	
 	
 
 }

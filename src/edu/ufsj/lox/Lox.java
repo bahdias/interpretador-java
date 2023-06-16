@@ -32,7 +32,7 @@ public class Lox{
 	}
 	
 	private static void runFile(String path) throws IOException { 
-		//M�todo que vai para o arquivo
+		//Metodo que vai para o arquivo
 		byte[] bytes = Files.readAllBytes(Paths.get(path));
 		run(new String(bytes, Charset.defaultCharset()));
 		if(hadError) System.exit(65);
@@ -50,14 +50,14 @@ public class Lox{
 			if(line == null){
 				break;
 			}
-			//Se tiver coment�rio de multiplas linhas:
+			//Se tiver comentario de multiplas linhas:
 			else if(line.contains("/*")) {
 				while(!line.contains("*/")) {
 					System.out.print(">");
 					line = reader.readLine();
 				}
 				continue;
-			}//Terminou o coment�rio de multiplas linhas
+			}//Terminou o comentario de multiplas linhas
 			
 			run(line);
 			hadError = false;
@@ -66,7 +66,7 @@ public class Lox{
 
 	
 	private static void run(String source) { 
-		//Interpretar ou um arquivo, ou uma linha s�
+		//Interpretar ou um arquivo, ou uma linha so
 		Scanner scanner = new Scanner(source); //Processa o source e quebra em uma lista de tokens
 		List<Token> tokens = scanner.scanTokens();
 		//por enquanto, somente mostra os tokens

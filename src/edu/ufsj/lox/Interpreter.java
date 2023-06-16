@@ -1,8 +1,5 @@
 package edu.ufsj.lox;
 
-import edu.ufsj.lox.Expr.Binary;
-import edu.ufsj.lox.Expr.Unary;
-
 public class Interpreter implements Expr.Visitor<Object> {
 	
 	@Override
@@ -126,4 +123,16 @@ public class Interpreter implements Expr.Visitor<Object> {
 		
 		return object.toString();
 	}
+	
+	@Override
+	public Object visitTernaryExpr(Expr.Ternary expr) {
+	    Object condition = evaluate(expr.condition); //Condicao do Operador Ternario
+	    Object trueExpr = evaluate(expr.trueExpr); //Retorno se a condicao for verdade
+	    Object falseExpr = evaluate(expr.falseExpr); //Retorno se a condicao for falsa
+	    
+	    // Avalia se a condicao passada no operador ternario eh satisfeita
+	    if (isTruthy(condition)) return trueExpr; //Se for, retorna a expressao verdadeira
+	    else return falseExpr; //Senao, retorna a expressao falsa
+	}
+
 }

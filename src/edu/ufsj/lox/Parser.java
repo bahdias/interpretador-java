@@ -25,14 +25,23 @@ public class Parser {
 	}
 	
 	private Expr equality() {
-		Expr expr = comparison();
-		
-		while(match(BANG_EQUAL, EQUAL_EQUAL)) {
-			Token operator = previous();
-			Expr right = comparison();
-			expr = new Expr.Binary(expr, operator, right);
-		}
-		return expr;
+	    Expr expr = comparison();
+
+	    if (match(QUESTION_MARK)) {
+		    //Se encontrar a interrogacao
+	        Expr trueExpr = equality(); //Pega todo o retorno se a condicao for satisfeita
+	        consume(COLON, "Expect ':' after true expression in ternary operator"); //Consome os dois pontos
+	        Expr falseExpr = equality(); //Pega todo o retorno se a condicao não for satisfeita
+	        expr = new Expr.Ternary(expr, trueExpr, falseExpr); //Cria uma nova expressão ternaria e salva os dados encontrados anteriormente
+	    } else {
+	        while (match(BANG_EQUAL, EQUAL_EQUAL)) {
+	            Token operator = previous();
+	            Expr right = comparison();
+	            expr = new Expr.Binary(expr, operator, right);
+	        }
+	    }
+
+	    return expr;
 	}
 	
 	private boolean match(TokenType... types) {
